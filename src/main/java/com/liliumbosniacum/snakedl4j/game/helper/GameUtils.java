@@ -1,17 +1,24 @@
 package com.liliumbosniacum.snakedl4j.game.helper;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.swing.*;
 import java.awt.*;
 
 /**
  * Util class containing methods used to ease our handling of the game.
  *
- * @author lilium
+ * @author mirza
  */
 public final class GameUtils {
+    // region Member
+    /**
+     * Dimensions of game world 300x300.
+     */
+    public static final int GAME_DIMENSIONS = 300;
+    /**
+     * Size of a player body part (head or tail).
+     */
+    public static final int PLAYER_SIZE = 10;
+    // endregion
 
     // region Constructor
     private GameUtils() {}
@@ -19,7 +26,6 @@ public final class GameUtils {
 
     // region Implementation
     public static Image getFoodImage() {
-        // return new ImageIcon("D:\\Development\\snakedl4j\\src\\main\\resources\\images\\food.png").getImage();
         return new ImageIcon("src/main/resources/images/food.png").getImage();
     }
 

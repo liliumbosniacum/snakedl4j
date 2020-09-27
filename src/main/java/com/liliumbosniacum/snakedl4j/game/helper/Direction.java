@@ -3,7 +3,7 @@ package com.liliumbosniacum.snakedl4j.game.helper;
 /**
  * Enum containing possible directions player can take.
  *
- * @author lilium
+ * @author mirza
  */
 public enum Direction {
     /**
