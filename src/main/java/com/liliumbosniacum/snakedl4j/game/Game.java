@@ -163,6 +163,13 @@ public class Game extends JPanel implements ActionListener {
     }
 
     /**
+     * Used to end game.
+     */
+    public void endGame() {
+        this.inGame = false;
+    }
+
+    /**
      * Get current game state.
      *
      * @return Returns an object representing current game state.

@@ -20,6 +20,7 @@ public final class GameStateHelper {
      * Dictates how far can the snake see. Number of network inputs depends on it.
      */
     private static final int VIEW_DISTANCE = 3;
+    private static final int FOOD_EATEN_REWARD = 100;
     // endregion
 
     // region Constructor
@@ -69,22 +70,30 @@ public final class GameStateHelper {
             case MOVE_UP:
                 score += getScoreForStates(getStatsForDirectionUp(snakeBodyPosition, headPosition));
                 score += getScoreForFoodState(foodStates, 0);
-                score += foodPosition.equals(new Position(headPosition.getX(), headPosition.getY() - GameUtils.PLAYER_SIZE)) ? 5 : 0;
+                score += getScoreForFoodState(foodStates, 4);
+                score += getScoreForFoodState(foodStates, 5);
+                score += foodPosition.equals(new Position(headPosition.getX(), headPosition.getY() - GameUtils.PLAYER_SIZE)) ? FOOD_EATEN_REWARD : 0;
                 break;
             case MOVE_RIGHT:
                 score += getScoreForStates(getStatsForDirectionRight(snakeBodyPosition, headPosition));
                 score += getScoreForFoodState(foodStates, 1);
-                score += foodPosition.equals(new Position(headPosition.getX() + GameUtils.PLAYER_SIZE, headPosition.getY())) ? 5 : 0;
+                score += getScoreForFoodState(foodStates, 4);
+                score += getScoreForFoodState(foodStates, 6);
+                score += foodPosition.equals(new Position(headPosition.getX() + GameUtils.PLAYER_SIZE, headPosition.getY())) ? FOOD_EATEN_REWARD : 0;
                 break;
             case MOVE_DOWN:
                 score += getScoreForStates(getStatsForDirectionDown(snakeBodyPosition, headPosition));
                 score += getScoreForFoodState(foodStates, 2);
-                score += foodPosition.equals(new Position(headPosition.getX(), headPosition.getY() + GameUtils.PLAYER_SIZE)) ? 5 : 0;
+                score += getScoreForFoodState(foodStates, 6);
+                score += getScoreForFoodState(foodStates, 7);
+                score += foodPosition.equals(new Position(headPosition.getX(), headPosition.getY() + GameUtils.PLAYER_SIZE)) ? FOOD_EATEN_REWARD : 0;
                 break;
             case MOVE_LEFT:
                 score += getScoreForStates(getStatsForDirectionLeft(snakeBodyPosition, headPosition));
                 score += getScoreForFoodState(foodStates, 3);
-                score += foodPosition.equals(new Position(headPosition.getX() - GameUtils.PLAYER_SIZE, headPosition.getY())) ? 5 : 0;
+                score += getScoreForFoodState(foodStates, 5);
+                score += getScoreForFoodState(foodStates, 7);
+                score += foodPosition.equals(new Position(headPosition.getX() - GameUtils.PLAYER_SIZE, headPosition.getY())) ? FOOD_EATEN_REWARD : 0;
                 break;
             default:
                 break;
@@ -204,20 +213,15 @@ public final class GameStateHelper {
     }
 
     private static double getScoreForStates(final Boolean[] states) {
-        double score = 0;
-        for (final Boolean state : states) {
-            if (!state) {
-                score -=1.5;
-            }
-
-            score += 1;
+        if (Arrays.stream(states).allMatch(x -> false)) {
+            return -100; // Will die
         }
 
-        return score;
+        return -1 * states.length;
     }
 
     private static double getScoreForFoodState(final Boolean[] foodState, final int index) {
-        return foodState[index] ? 0.5 : -1;
+        return foodState[index] ? 1 : 0;
     }
 
     /**

@@ -19,6 +19,7 @@ public final class NetworkTrainingHelper {
     // region Member
     private static final Logger LOG = LoggerFactory.getLogger(NetworkTrainingHelper.class);
     private static final int NUMBER_OF_GAMES = 5_000;
+    private static final int STUCK_SCORE = -500; // Score which indicates that the player is stuck (running in a loop)
     // endregion
 
     // region Constructor
@@ -37,7 +38,7 @@ public final class NetworkTrainingHelper {
 
             int largestSnakeLength = 0;
             for (int i = 1; i <= NUMBER_OF_GAMES; i++) {
-                LOG.info("Starting game session number '{}'", i);
+                LOG.debug("Starting game session number '{}'", i);
                 // Prepare the game world
                 game.initializeGame();
 
@@ -46,6 +47,11 @@ public final class NetworkTrainingHelper {
 
                 int gameSessionScore = 0;
                 while (game.isOngoing()) {
+                    if (gameSessionScore < STUCK_SCORE) {
+                        LOG.error("Player is stuck, ending the game");
+                        game.endGame();
+                    }
+
                     // Select action based on current state
                     final Action action = NetworkUtil.epsilonGreedyAction(state, network, epsilon);
 
@@ -79,7 +85,7 @@ public final class NetworkTrainingHelper {
                 }
 
                 final int snakeLength = game.getSnakeLength();
-                LOG.info("Total score for session '{}' is :'{}' with snake length of: '{}'",
+                LOG.debug("Total score for session '{}' is :'{}' with snake length of: '{}'",
                         i,
                         gameSessionScore,
                         snakeLength
@@ -87,6 +93,7 @@ public final class NetworkTrainingHelper {
 
                 if (snakeLength > largestSnakeLength) {
                     largestSnakeLength = snakeLength;
+                    LOG.info("Current longest snake equals : '{}' at game session : '{}'", largestSnakeLength, i);
                 }
             }
 
