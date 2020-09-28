@@ -217,11 +217,11 @@ public final class GameStateHelper {
             return -100; // Will die
         }
 
-        return -1 * states.length;
+        return -1;
     }
 
     private static double getScoreForFoodState(final Boolean[] foodState, final int index) {
-        return foodState[index] ? 1 : 0;
+        return foodState[index] ? 0.5 : 0;
     }
 
     /**
