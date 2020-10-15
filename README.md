@@ -1,6 +1,6 @@
 # snakedl4j - Simple AI made using Deeplearning4j trying to play Snake game
 
-Aim of this project is to introduce you to dl4j while we try to train AI to play snake game. Keep in mind that this is mine first contact with dl4j and that there might bee things
+Aim of this project is to introduce you to dl4j while we try to train AI to play snake game. Keep in mind that this is mine first contact with dl4j and that there might be things
 done wrong and in incorect way. With that beeing said lets take a look on how it is implemented.
 
 ## What does the snake see ?
