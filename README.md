@@ -14,3 +14,6 @@ In order to start the training application needs to be started with program argu
 
 ## How to evaluate trained network
 In order to start the training application needs to be started with program argument `EVALUATE`. Number of evaluation sessions is defined in `NetworkEvaluationHelper#NUMBER_OF_GAMES`.
+
+## Preview
+https://youtu.be/vH9qlZcifZk
